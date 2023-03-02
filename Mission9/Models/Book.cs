@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mission9.Models
 {
-    public class Book
+    public partial class Book
     {
         [Key]
         [Required]

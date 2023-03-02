@@ -1,38 +1,35 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Mission9.Models;
-
 
 namespace Mission9
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; set; }
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public IConfiguration Configuration { get; set; }
+        public Startup(IConfiguration temp)
+        {
+            Configuration = temp;
+        }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
             services.AddDbContext<Mission9Context>(options =>
             {
-                options.UseSqlite(Configuration["ConnectionStrings:WaterDBConnection"]);
+                options.UseSqlite(Configuration["ConnectionStrings:Mission9DBConnection"]);
             });
             services.AddScoped<IMission9Repository, EFMission9Repository>();
         }
@@ -44,16 +41,14 @@ namespace Mission9
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHttpsRedirection();
+            //uses wwwroot
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();  
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
