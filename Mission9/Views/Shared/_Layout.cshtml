@@ -4,16 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Mission9</title>
+    @*bringing in bootstrap and custom css. *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    @*Creating a nav bar and partitioning the page into parts between the list of books and the category filtering menu. *@
     <div class="bg-dark text-white p-2">
         <span class="navbar-brand ml-2">BOOK STORE</span>
     </div>
     <div class="row m-1 p-1">
         <div id="categories" class="col-3">
-            Put something useful here later
+            <vc:categories></vc:categories>
         </div>
         <div class="col-9">
             @RenderBody()

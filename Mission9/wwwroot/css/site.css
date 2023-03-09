@@ -12,6 +12,11 @@ a {
   color: #0366d6;
 }
 
+.btn:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

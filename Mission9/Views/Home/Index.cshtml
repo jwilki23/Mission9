@@ -5,7 +5,7 @@
 @model BooksViewModel
 
 <h1>Books</h1>
-
+@*Using a partial view to populate the index page dynamically through the model. *@
 @foreach (Book b in Model.Books)
 {
 <partial name="BooksSummary" model="b" />

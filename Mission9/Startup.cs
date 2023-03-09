@@ -32,6 +32,10 @@ namespace Mission9
                 options.UseSqlite(Configuration["ConnectionStrings:Mission9DBConnection"]);
             });
             services.AddScoped<IMission9Repository, EFMission9Repository>();
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,12 +47,28 @@ namespace Mission9
             }
             //uses wwwroot
             app.UseStaticFiles();
+            // uses sesssion, proper routing, and the detailed endpoints.
+            app.UseSession();
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                //Created and ordered new endpoints to make the urls make sense and have the correct behavior for the user when they click on different buttons. 
+                
+                endpoints.MapControllerRoute("categorypage", "{bookCategory}/Page{pageNum}", new { Controller = "Home", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "Paging",
+                    pattern: "Page{pageNum}",
+                    defaults: new { Controller = "Home", action = "Index", pageNum = 1});
+
+                endpoints.MapControllerRoute("category", "{bookCategory}", new { Controller = "Home", action = "Index", pageNum = 1});
+                
+
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
             });
         }
     }

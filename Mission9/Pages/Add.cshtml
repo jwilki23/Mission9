@@ -1,0 +1,39 @@
+﻿@page
+@model Mission9.Pages.AddModel
+@{
+}
+@*Table to show the information in the cart. It is brought in dynamically through the basket which gets reset every time you end a session. *@
+<h2>Your Cart</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var i in Model.basket.Items)
+            {
+                <tr>
+                    <td>@i.Book.Title</td>
+                    <td>@i.Quantity</td>
+                    <td>@i.Book.Price</td>
+                    <td>@(i.Quantity * i.Book.Price)</td>
+                </tr>
+            }
+    </tbody>
+    @*Row in table to show total cost. Converts string to currency. *@
+    <tfoot>
+        <tr>
+            <td colspan="3">Total:</td>
+            <td>@Model.basket.CalculateTotal().ToString("c")</td>
+        </tr>
+    </tfoot>
+</table>
+@*Button to allow users to continue shopping. *@
+<div>
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+</div>
