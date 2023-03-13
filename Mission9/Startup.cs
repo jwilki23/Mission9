@@ -31,11 +31,17 @@ namespace Mission9
             {
                 options.UseSqlite(Configuration["ConnectionStrings:Mission9DBConnection"]);
             });
+            //registers singleton instances of the ef repositories whenever an instance of the i repository interfaces are requested. 
             services.AddScoped<IMission9Repository, EFMission9Repository>();
+            services.AddScoped<IPurchaseRepository, EFPurchaseRepository>();
+
             services.AddRazorPages();
 
             services.AddDistributedMemoryCache();
             services.AddSession();
+
+            services.AddScoped<Basket>(x => SessionBasket.GetBasket(x));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
