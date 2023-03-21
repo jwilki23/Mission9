@@ -58,6 +58,12 @@ namespace Mission9
 
             app.UseRouting();
 
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Xss-Protection", "1");
+                await next();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 //Created and ordered new endpoints to make the urls make sense and have the correct behavior for the user when they click on different buttons. 
